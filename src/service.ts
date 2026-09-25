@@ -2,7 +2,7 @@ import { execFile } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import { mkdir, readFile, rm, stat, writeFile } from 'node:fs/promises';
 import { homedir } from 'node:os';
-import { dirname, join, resolve } from 'node:path';
+import { dirname, join, resolve, win32 } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { promisify } from 'node:util';
 
@@ -91,7 +91,8 @@ export function windowsLauncher(config: ServiceConfig): string {
     'Set shell = CreateObject("WScript.Shell")',
     'Set fso = CreateObject("Scripting.FileSystemObject")',
     ...envLines,
-    `stopFlag = "${stopFlagPath(config.dataDir)}"`,
+    // A Windows script, so a Windows path wherever it is generated.
+    `stopFlag = "${win32.join(config.dataDir, 'service.stopped')}"`,
     'Do',
     `  shell.Run "${command}", 0, True`,
     '  If fso.FileExists(stopFlag) Then Exit Do',

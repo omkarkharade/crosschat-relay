@@ -557,8 +557,9 @@ async function stopLeftover(pid: number, image: string): Promise<void> {
       if (!stdout.toLowerCase().includes(`"${image.toLowerCase()}"`)) return;
       await execFileAsync('taskkill', ['/PID', String(pid), '/T', '/F'], { windowsHide: true });
     } else {
-      const { stdout } = await execFileAsync('ps', ['-p', String(pid), '-o', 'comm=']);
-      if (basename(stdout.trim()) !== image) return;
+      // The full command line: Node.js names its main thread 'MainThread', so the short process name doesn't say which program it is.
+      const { stdout } = await execFileAsync('ps', ['-p', String(pid), '-o', 'args=']);
+      if (!stdout.split(/\s+/).some((part) => basename(part) === image)) return;
       process.kill(pid, 'SIGTERM');
     }
   } catch {
