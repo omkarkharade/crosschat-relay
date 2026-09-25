@@ -1,0 +1,35 @@
+name: Bug report
+description: Something doesn't work as documented.
+labels: [bug]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Include the tool call or request, what you expected, and what you got.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Relay version
+      description: Output of `crosschat-relay --version`
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Node.js version, OS, Docker or not, and which MCP client(s).
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Remove your API token and any private task content first.
+      render: text

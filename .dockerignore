@@ -1,0 +1,12 @@
+node_modules
+dist
+data
+output
+coverage
+test
+.git
+.github
+.env
+.env.*
+*.md
+desktop

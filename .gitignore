@@ -1,0 +1,21 @@
+node_modules/
+dist/
+coverage/
+
+# Runtime state: the ledger and the generated API token.
+data/
+
+# Local configuration and secrets.
+.env
+.env.*
+!.env.example
+
+# Generated assets from other projects; not part of the relay.
+output/
+
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Local preview configuration for the Claude desktop app.
+.claude/launch.json

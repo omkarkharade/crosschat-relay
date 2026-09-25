@@ -1,0 +1,68 @@
+{
+  "name": "crosschat-desktop",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Tray app that keeps the Crosschat relay running in the background.",
+  "author": "omkarkharade",
+  "license": "MIT",
+  "type": "module",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "icons": "node scripts/make-icon.mjs",
+    "prepare-relay": "node scripts/prepare-relay.mjs",
+    "dist": "npm run icons && npm run prepare-relay && electron-builder",
+    "dist:win": "npm run icons && npm run prepare-relay && electron-builder --win",
+    "dist:mac": "npm run icons && npm run prepare-relay && electron-builder --mac",
+    "dist:linux": "npm run icons && npm run prepare-relay && electron-builder --linux"
+  },
+  "build": {
+    "appId": "dev.crosschat.desktop",
+    "productName": "Crosschat",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "icon.js",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "build/relay",
+        "to": "relay"
+      }
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "runAfterFinish": true
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "category": "public.app-category.developer-tools",
+      "extendInfo": {
+        "LSUIElement": true
+      }
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Development"
+    }
+  },
+  "devDependencies": {
+    "electron": "^44.4.5",
+    "electron-builder": "^26.15.3"
+  }
+}
